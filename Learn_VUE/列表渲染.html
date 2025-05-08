@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+</head>
+<body>
+    <div id="root">
+        <ul>
+            <li>123</li>
+            <li v-for="(person,index) in person_list" :key="person.id">
+                {{person.name}}:{{person.age}}
+            </li>
+            <hr>
+            <li v-for="(c,index) in car">
+                {{index}}:{{c}}
+            </li>
+        </ul>
+
+        <div>
+            <input type="text" placeholder="请输入姓名" v-model="name">
+            <ul>
+                <li v-for="p in fillperson" :key="p.id">
+                    {{p.name}}:{{p.age}}
+                </li>
+            </ul>
+        </div>
+        <div>
+            <input type="text" placeholder="请输入姓名" v-model="name">
+            <ul>
+                <li v-for="p in fpersons" :key="p.id">
+                    {{p.name}}:{{p.age}}
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    
+</body>
+<script>
+    const vm = new Vue({
+        el:"#root",
+        data:{
+            name:"",
+            person_list:[
+                {id: "001",name:"张三", age:18},
+                {id: "002", name:"李四", age:20},
+                {id: "003", name:"王五", age:22}
+            ],
+            car:{
+                brand:"奔驰",
+                price:1000000,
+                color:"black"
+            },
+            persons: [
+                { id: "001", name: "马冬梅", age: 18 ,sex:"女"},
+                { id: "002", name: "周冬雨", age: 20 ,sex:"女"},
+                { id: "003", name: "周杰伦", age: 22 ,sex:"男"},
+                { id: "004", name: "王五", age:12,sex:"男"},
+            ],
+            fillperson:[]
+        },
+        watch:{
+            name:{
+                handler(val,old){
+                    this.fillperson = this.persons.filter((item)=>{
+                        return item.name.indexOf(val) !== -1
+                    })
+                    // if(this.fillperson.length === 0){
+                    //     this.fillperson = this.persons
+                    // }
+                },
+                immediate:true,
+                
+            }
+        },
+        computed:{
+            fpersons:{
+                get(){
+                    return this.persons.filter((item)=>{
+                        return item.name.indexOf(this.name) !== -1
+                    })
+                } 
+            }
+        },
+    })
+</script>
+</html>
