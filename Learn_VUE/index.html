@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h1>插值语法</h1>
+        <h3>{{u_name}}</h3>
+        <hr>
+        <h1>指令语法</h1>
+        <a v-bind:href="url" @click.prevent="goto">go to bili</a>
+        <br><br>
+        <a :href="url">go to bili</a>
+        <hr>
+        <input type="text" v-bind:value="u_value.input_v"><br>
+        <input type="text" v-model:value="u_value.input_v">//双向绑定
+        <button @click="showinfo">点我提示信息</button>
+        <button @click="showinfo_fun($event,18)">传参数</button>
+    </div>
+    <script>
+        //数据代理
+        let number = 'man'
+        let person = {
+            name:"xa",
+            age:"18"
+        }
+        Object.defineProperty(person,"sex",{
+            // value:"man",
+            get(){return number},
+            set(value){}
+        })
+        console.log(person)
+        //创建Vue
+        const x = new Vue({
+            el: '#root',//css select
+            // data:{
+            //     u_name:"xa",
+            //     url:"https://www.bilibili.com",
+            //     u_value:{
+            //         input_v:"input_value",
+            //     }（对象式）
+            // }
+            data() {
+                return {
+                    u_name: "xa",
+                    url: "https://www.bilibili.com",
+                    u_value: {
+                        input_v: "input_value",
+                    }
+                }
+            },//等价上面的data创建写法（当前函数式）
+            methods:{
+                showinfo(event){
+                    alert("hello")
+                },
+                showinfo_fun(event,number){
+                    alert(number)
+                },
+                goto(e){
+                    alert("gpto")
+                },
+            }
+        })
+
+        //x.$mount('#root')等价上边的el:'#root'
+    </script>
+</body>
+
+</html>

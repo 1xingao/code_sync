@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+</head>
+<body>
+    <div id="root">
+        <input type="text" placeholder="按下回车输入" @keyup.enter="keyevent1">
+        <br><br>
+
+        xing: <input type="text" v-model="fir">
+        <br><br>
+        ming: <input type="text" v-model="sec">
+        <br><br>
+        xingming: <span>{{fullname()}}</span>
+        // 有返回值就是要加（）
+        <br><br>
+        xingming: <span>{{fullname_compute_simple}}</span>
+        <br><br>
+        
+    </div>
+</body>
+<script>
+    const vm = new Vue({
+        el:'#root',
+        data:{
+            fir:'张',
+            sec:'三'
+        },
+        methods:{
+            keyevent1(e){
+                console.log(e.target.value)
+                console.log(e.keyCode)
+            },
+            fullname(){
+                return this.fir.slice(0,3)+"-"+this.sec.slice(0,3)
+            }
+        },
+        computed:{
+            fullname_compute:{
+                get(){
+                    return this.fir.slice(0,3)+"-"+this.sec.slice(0,3)
+                },
+                set(value){
+                    console.log(value)
+                    const arr = value.split('-')
+                    this.fir = arr[0]
+                    this.sec = arr[1]
+                }
+                
+            },
+            fullname_compute_simple:function(){
+                return this.fir.slice(0, 3) + "*" + this.sec.slice(0, 3)
+            }
+            //只读取不修改才可以简写
+        }
+    })
+</script>
+</html>
